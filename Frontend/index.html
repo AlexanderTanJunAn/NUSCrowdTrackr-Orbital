@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+
+  <title>NUSCrowdTrackr</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/navstyles.css">
+  <link rel="stylesheet" href="css/mainstyle.css">
+
+  <link href="src/jquery-weekdays.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+  <script src="js/perc2color.js" type="text/javascript"></script>
+  <script src="js/mainChart.js" type="text/javascript"></script>
+  <script src="js/trendChart.js" type="text/javascript"></script>
+  
+</head>
+
+<body>
+  <div class="topnav" id="myTopnav">
+    <a href="about.html"><img src="graphics/icon.png" style="height:40px;"></a>
+    <div class="dropdown">
+      <button class="dropbtn">Sports Facilities
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a class="location">Gym@MPSH 3</a>
+        <a class="location">Gym@Stephen Riady Centre</a>
+        <a class="location">Gym@USC</a>
+        <a class="location">Swimming Pool@Stephen Riady Centre</a>
+        <a class="location">Swimming Pool@USC</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Libraries
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a class="location">Central Library</a>
+        <a class="location">Chinese Library</a>
+        <a class="location">Hon Sui Sen Memorial Library</a>
+        <a class="location">CJ Koh Law Library</a>
+        <a class="location">Medical Library</a>
+        <a class="location">Music Library</a>
+        <a class="location">Science Library</a>
+        <a class="location">Yale-NUS College Library</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Food & Beverages
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a class="location">Central Square@YIH</a>
+        <a class="location">E2 Halal Cafeteria@Engine</a>
+        <a class="location">Foodclique</a>
+        <a class="location">Frontier</a>
+        <a class="location">PGPR Aircon Food Court</a>
+        <a class="location">The Deck</a>
+        <a class="location">Fine Food</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="main_container">
+    <div class="location-header" id="location-header-top">
+      <h1>Current Occupancy of <span id="location"></span><h1></h1>
+      <p>(Updated in 1-hour intervals)</p>
+    </div>
+    <div class="facility-percentage" id="top-facility-percentage">
+      <h2><span id="percentage" style="font-size:150%">--</span>% occupied now</h2>
+    </div>
+    <div class="number-people">
+      <h2 id="number-entered-exit"></h2>
+    </div>
+    <div class="chart" id="chartAverageContainer" style="height: 300px;"></div>
+  </div>
+    
+
+  <hr>
+
+  <div class="overview" id="overview-top">
+    <div class="timedate-selector" id="timedate-selector-top" style="text-align: justify; padding-left: 5em;">
+      <div class="day-selector" id="weekdays">Day</div>
+      <div class="option-name">Time</div>
+        <select id="time-selector-btm" onchange="renderTrendData()">
+          <option value="all">Show all</option>
+          <option value="7">7AM - 11AM</option>
+          <option value="11">11AM - 3PM</option>
+          <option value="15">3PM - 7PM</option>
+          <option value="19">7PM - 10PM</option>
+        </select>
+      </div>
+      <div class="chart" id="chartTrendContainer" style="height: 300px"></div>
+    </div>
+  </div>
+
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.15.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.1/firebase-database.js"></script>
+  <!-- Initialize Firebase  -->
+  <script src="js/init-firebase.js"></script>
+
+  <script src="src/jquery-weekdays.js"></script>
+  <script>
+    $(function () {
+      $('#weekdays').weekdays(
+        {singleSelect:true}
+      );
+    });
+  </script>
+
+  <script type="text/javascript">
+    $('.location').click(function() {
+    document.getElementById("location").innerHTML=($(this).text());
+    renderAverageData();
+    renderTrendData();
+    });
+  </script>
+</body>
+
+</html>
